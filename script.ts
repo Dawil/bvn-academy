@@ -31,26 +31,29 @@ $(window).load(function(){
 		.addClass("visible");
 	};
 
-	function pauseOn():void {
-		var FRAME:number = 3;
-		if (window.ytplayer.getPlayerState() === 1 &&
-				Math.round(window.ytplayer.getCurrentTime()) == FRAME) {
-			window.ytplayer.pauseVideo();
-			window.frame = window.ytplayer.getCurrentTime();
-			toggleVisible();
-		}
-	};
+	function pauseOn(n:number):any {
+		return setInterval( function():void {
+			if ( window.ytplayer.getPlayerState() === 1 ) {
+				if ( Math.abs( window.ytplayer.getCurrentTime() - n) < 0.25 ) {
+					toggleVisible();
+					window.ytplayer.pauseVideo();
+					console.log("frame is", window.ytplayer.getCurrentTime());
+				}
+			}
+		}, 500);
+	}
 
 	function resumeOnClick(event:JQueryEventObject):void {
 		toggleVisible();
-		console.log("frame is", window.frame);
-		window.ytplayer.seekTo(window.frame+1.1);
+		console.log("frame is", window.ytplayer.getCurrentTime());
+		window.ytplayer.seekTo(window.frame+0.25);
 		window.ytplayer.playVideo();
-	};
+	}
+
 	// Start after player has loaded
 	function Start():void {
 		window.ytplayer.playVideo();
-		window.setInterval(pauseOn, 1000);
+		pauseOn(3);
 		$("#form").click(resumeOnClick);
 	}
 });
