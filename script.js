@@ -1,7 +1,7 @@
 $(window).load(function(){
 	// Load player
 	var params = { allowScriptAccess: "always" };
-	swfobject.embedSWF("http://www.youtube.com/v/dQw4w9WgXcQ&enablejsapi=1&playerapiid=ytPlayer",
+	swfobject.embedSWF("http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer",
 		"ytPlayer", "560", "315", "8", null, null, params);
 
 	// On Load assign ytplayer
@@ -42,5 +42,5 @@ $(window).load(function(){
 		window.setInterval(pauseOn(3), 1000);
 		$("#form").click(resumeOnClick);
 		}
-	};
+	}
 );
