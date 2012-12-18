@@ -12,7 +12,7 @@ declare var swfobject;
 $(window).load(function(){
 	// Load player
 	var params = { allowScriptAccess: "always" };
-	swfobject.embedSWF("http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer",
+	swfobject.embedSWF("http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3",
 		"ytPlayer", "560", "315", "8", null, null, params);
 
 	// On Load assign ytplayer
@@ -26,10 +26,10 @@ $(window).load(function(){
 		var currentlyVisible = $(".visible");
 		var currentlyInvisible = $(".invisible");
 		currentlyVisible.removeClass("visible")
-		.addClass("invisible");
+			.addClass("invisible");
 		currentlyInvisible.removeClass("invisible")
-		.addClass("visible");
-	};
+			.addClass("visible");
+	}
 
 	function pauseOn(n:number):any {
 		return setInterval( function():void {
