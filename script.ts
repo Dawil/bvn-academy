@@ -7,49 +7,42 @@ interface Window {
 }
 
 declare var swfobject;
-var POLL_STEP:number = 0.5; // seconds
+var POLL_STEP:number = 250; // milliseconds
+var HAS_ENDED:number = 0;
 var IS_PLAYING:number = 1;
 var IS_PAUSED:number = 2;
+var timer:Timer=null;
+
+function getNow():number { return +(new Date); }
 
 class Timer {
 	private INFINITY:number = 0;
 
-	private tickHandlers:{ ():void; }[];
-	private completionHandlers:{ ():void; }[];
+	private tickHandlers:{ ():void; }[] = [];
+	private completionHandlers:{ ():void; }[] = [];
 
 	// ID of our timeout
-	private timeoutID:number;
+	private intervalID:number;
 
 	// how many times we've ticked
 	private currentCount:number=0;
 
-	// the last time we ticked
-	// null if we've never started
-	private last:number=null;
-
-	// says how long we have left until a tick
-	// null if we're active
-	private remaining:number=null;
-
 	// if we've a timeout running
-	private active:bool=false;
+	active:bool=false;
 
 	constructor(private delay:number, private repeatCount?:number=0) {
 	}
 
 	private tick():void {
 		this.currentCount++;
-		this.last = this.getNow();
 		if (this.repeatCount === this.INFINITY
 				|| this.currentCount < this.repeatCount) {
 			this.runTickers();
 		} else {
-			this.stop();
 			this.runCompletions();
+			this.stop();
 		}
 	}
-
-	private getNow():number { return +(new Date); }
 
 	private runTickers():void {
 		this.tickHandlers.map( (handler) => handler() )
@@ -59,35 +52,33 @@ class Timer {
 		this.completionHandlers.map( (handler) => handler() )
 	}
 
+	private createInterval(delay:number):number {
+		return window.setInterval($.proxy(this.tick, this), delay);
+	}
+
+	private destroyInterval(id:number):void {
+		console.log("Clearing timeout: ", id);
+		window.clearInterval(id);
+	}
+
 	start():void {
 		if (this.active === false) {
-			if (this.last !== null) {
-				// start for the first time
-				this.timeoutID = window.setTimeout(this.tick, this.delay);
-				this.last = this.getNow();
-			} else {
-				// resume from last
-				this.timeoutID = window.setTimeout(this.tick, this.remaining);
-				this.remaining = null;
-			}
+			this.intervalID = this.createInterval(this.delay);
 			this.active = true;
 		}
 	}
 
 	stop():void {
-		// TODO decide which order to execute these in
-		var now:number = this.getNow();
-		window.clearTimeout(this.timeoutID);
-
-		this.remaining = now - this.last;
-		this.last = now;
-		this.active = false;
+		if (this.active) {
+			this.destroyInterval(this.intervalID);
+			console.log("deleted interval ", this.intervalID);
+			delete this.intervalID;
+			this.active = false;
+		}
 	}
 
 	reset():void {
 		this.stop();
-		this.last = null;
-		this.remaining = null;
 		this.currentCount = 0;
 	}
 
@@ -101,29 +92,32 @@ class Timer {
 }
 
 // Helper functions
-function pauseOn(n:number):any {
-	var poll = function():any {
-		return setInterval( function():void {
-			if ( window.ytplayer.getPlayerState() === IS_PLAYING ) {
-				var timeGap = Math.abs( window.ytplayer.getCurrentTime() - n );
-				if ( timeGap < (POLL_STEP/2) ) {
-					toggleVisible();
-					//window.ytplayer.pauseVideo();
-					console.log("frame is", window.ytplayer.getCurrentTime());
-				}
-			}
-		}, POLL_STEP*1000);
-	}
-	var intervalID = poll();
-	window.ytplayer.addEventListener('onStateChange', function():void {
-		var state = window.ytplayer.getPlayerState();
-		if ( state === IS_PLAYING && intervalID == null) {
-			intervalID = poll();	
-		} else if ( state === IS_PAUSED ) {
-			clearInterval( intervalID );
-			intervalID = null;
+function pauseOn(n:number):void {
+	timer = new Timer(POLL_STEP);
+	timer.onTick(() => {
+		// in milliseconds
+		var timeGap = 1000 * Math.abs( window.ytplayer.getCurrentTime() - n );
+		console.log(timeGap, timeGap < (POLL_STEP/2), getNow());
+		if (timeGap < (POLL_STEP/2)) {
+			toggleVisible();
 		}
 	});
+	window.ytplayer.addEventListener('onStateChange', 'syncPlayer');
+	$("#form").click(() => toggleVisible());
+}
+
+function syncPlayer(state:number):void {
+	console.log("state is ", state, " so I'm ");
+	if (state ===  IS_PAUSED) {
+		timer.stop();
+		console.log("stopping");
+	} else if (state === IS_PLAYING) {
+		console.log("starting");
+		timer.start();
+	} else if (state === HAS_ENDED) {
+		console.log("stopping");
+		timer.stop();
+	}
 }
 
 function toggleVisible():void {
@@ -140,18 +134,11 @@ function toggleVisible():void {
 	}
 }
 
-function resumeOnClick(event:JQueryEventObject):void {
-	toggleVisible();
-	console.log("frame is", window.ytplayer.getCurrentTime());
-	//window.ytplayer.seekTo( window.ytplayer.getCurrentTime() + (POLL_STEP/2) );
-	//window.ytplayer.playVideo();
-}
-
 // Start after player has loaded
 function Start():void {
 	window.ytplayer.playVideo();
 	pauseOn(3);
-	$("#form").click(resumeOnClick);
+	//timer.start();
 }
 
 $(window).load(function(){
