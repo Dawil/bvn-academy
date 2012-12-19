@@ -57,7 +57,6 @@ class Timer {
 	}
 
 	private destroyInterval(id:number):void {
-		console.log("Clearing timeout: ", id);
 		window.clearInterval(id);
 	}
 
@@ -71,7 +70,6 @@ class Timer {
 	stop():void {
 		if (this.active) {
 			this.destroyInterval(this.intervalID);
-			console.log("deleted interval ", this.intervalID);
 			delete this.intervalID;
 			this.active = false;
 		}
@@ -97,25 +95,20 @@ function pauseOn(n:number):void {
 	timer.onTick(() => {
 		// in milliseconds
 		var timeGap = 1000 * Math.abs( window.ytplayer.getCurrentTime() - n );
-		console.log(timeGap, timeGap < (POLL_STEP/2), getNow());
 		if (timeGap < (POLL_STEP/2)) {
 			toggleVisible();
 		}
 	});
 	window.ytplayer.addEventListener('onStateChange', 'syncPlayer');
-	$("#form").click(() => toggleVisible());
+	//$("#formwrapper").click(() => toggleVisible());
 }
 
 function syncPlayer(state:number):void {
-	console.log("state is ", state, " so I'm ");
 	if (state ===  IS_PAUSED) {
 		timer.stop();
-		console.log("stopping");
 	} else if (state === IS_PLAYING) {
-		console.log("starting");
 		timer.start();
 	} else if (state === HAS_ENDED) {
-		console.log("stopping");
 		timer.stop();
 	}
 }
@@ -136,6 +129,10 @@ function toggleVisible():void {
 
 // Start after player has loaded
 function Start():void {
+	$("button").click(function(){
+		alert("Alart");
+		toggleVisible();
+	});
 	window.ytplayer.playVideo();
 	pauseOn(3);
 	//timer.start();
