@@ -9,14 +9,17 @@ interface IVideoScope extends ng.IScope {
 }
 
 var VideoController:any = function($scope:IVideoScope, youtube:any) {
-	var VIDEO_MODE:string = 'video';
-	var FORM_MODE :string = 'form';
 	$scope.videoURL = "9bZkp7q19f0";
 	youtube.load($scope.videoURL, 'ytplayer')
 		.then(()=>{
 			youtube.getPlayer().playVideo();
 			youtube.getPlayer().mute();
 		});
+	youtube.onSecond(3,()=>{
+		$scope.showVideo = false;
+		youtube.getPlayer().pauseVideo();
+		$scope.$digest();
+	});
 	$scope.showVideo = true;
 	$scope.switchMode = () => {
 		$scope.showVideo = !$scope.showVideo;

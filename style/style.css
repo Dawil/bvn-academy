@@ -1,10 +1,10 @@
-.visible, .visibile-true {
+.visibile-true {
 	position: relative;
 	top: 0px;
 	right: 0px;
 }
 
-.invisible, .visible-false {
+.visible-false {
 	position: absolute;
 	top: -1000px;
 	right: -1000px;

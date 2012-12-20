@@ -13,7 +13,7 @@ var timer:Util.Timer=null;
 interface IYoutubeService {
 	getPlayer: () => any;
 	load: (video:string, id:string) => JQueryDeferred;
-	onFrame: (n:number, handler:()=>void) => void;
+	onSecond: (n:number, handler:()=>void) => void;
 }
 
 academyModule.factory('youtube', ['$q', ($q) => {
@@ -46,16 +46,16 @@ academyModule.factory('youtube', ['$q', ($q) => {
 				id, "560", "315", "8", null, null, params);
 			return deferred;
 		},
-		onFrame: (n:number, handler:()=>void):void => {
-			if (player) {
-				timer.onTick(() => {
+		onSecond: (n:number, handler:()=>void):void => {
+			timer.onTick(() => {
+				if (player) {
 					// in milliseconds
 					var timeGap = 1000 * Math.abs( player.getCurrentTime() - n );
 					if (timeGap < (POLL_STEP/2)) {
 						handler();
 					}
-				});
-			}
+				}
+			});
 		}
 	};
 	return youtube;
