@@ -1,5 +1,6 @@
 /// <reference path="../timer.ts" />
 /// <reference path="../../declarations/angular-1.0.d.ts" />
+/// <reference path="../../declarations/jquery-1.8.d.ts" />
 /// <reference path="../academy.ts" />
 
 declare var swfobject;
@@ -11,15 +12,13 @@ var timer:Util.Timer=null;
 
 interface IYoutubeService {
 	getPlayer: () => any;
-	load: (video:string, id:string) => void;
-	setOnLoadCallback: (callback:()=>void) => void;
+	load: (video:string, id:string) => JQueryDeferred;
 	onFrame: (n:number, handler:()=>void) => void;
 }
 
-academyModule.factory('youtube', () => {
+academyModule.factory('youtube', ['$q', ($q) => {
 	var timer:Util.Timer = new Util.Timer(POLL_STEP);
 	var player;
-	var onPlayerLoadCallback:()=>void = ()=>{};
 	var syncPlayer:(state:number)=>void = (state:number):void => {
 		if (state === IS_PAUSED) {
 			timer.stop();
@@ -34,19 +33,18 @@ academyModule.factory('youtube', () => {
 	};
 	var youtube:IYoutubeService = {
 		getPlayer: () => { return player; },
-		load: (video:string, id:string):void => {
+		load: (video:string, id:string):JQueryDeferred => {
+			var deferred:JQueryDeferred = $.Deferred();
 			var params = { allowScriptAccess: "always" };
 			(<any>window).onYouTubePlayerReady = ()=>{
 				player = document.getElementById(id);
 				player.addEventListener('onStateChange', 'onStateChangeHandler');
-				onPlayerLoadCallback();
+				deferred.resolve();
 			};
 			swfobject.embedSWF("http://www.youtube.com/v/" + video
 				+ "&enablejsapi=1&version=3",
 				id, "560", "315", "8", null, null, params);
-		},
-		setOnLoadCallback: (callback:()=>void):void => {
-			onPlayerLoadCallback = callback;
+			return deferred;
 		},
 		onFrame: (n:number, handler:()=>void):void => {
 			if (player) {
@@ -61,4 +59,4 @@ academyModule.factory('youtube', () => {
 		}
 	};
 	return youtube;
-});
+}]);

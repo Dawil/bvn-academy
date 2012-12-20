@@ -12,7 +12,11 @@ var VideoController:any = function($scope:IVideoScope, youtube:any) {
 	var VIDEO_MODE:string = 'video';
 	var FORM_MODE :string = 'form';
 	$scope.videoURL = "9bZkp7q19f0";
-	youtube.load($scope.videoURL, 'ytplayer');
+	youtube.load($scope.videoURL, 'ytplayer')
+		.then(()=>{
+			youtube.getPlayer().playVideo();
+			youtube.getPlayer().mute();
+		});
 	$scope.showVideo = true;
 	$scope.switchMode = () => {
 		$scope.showVideo = !$scope.showVideo;
