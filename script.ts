@@ -1,5 +1,13 @@
-/// <reference path="jquery-1.8.d.ts" />
-/// <reference path="youtube.d.ts" />
+/// <reference path="declarations/jquery-1.8.d.ts" />
+/// <reference path="declarations/youtube.d.ts" />
+/// <reference path="declarations/angular-1.0.d.ts" />
+
+interface IVideoScope extends ng.IScope {
+}
+
+function VideoController($scope:IVideoScope) {
+	$scope.title = "Title goes here";
+}
 
 interface Window {
 	ytplayer: any;
