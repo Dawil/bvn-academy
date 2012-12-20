@@ -41,13 +41,3 @@ function Start() {
     window.ytplayer.playVideo();
     pauseOn(3);
 }
-$(window).load(function () {
-    var params = {
-        allowScriptAccess: "always"
-    };
-    swfobject.embedSWF("http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3", "ytPlayer", "560", "315", "8", null, null, params);
-    window.onYouTubePlayerReady = function (playerId) {
-        window.ytplayer = document.getElementById("ytPlayer");
-        Start();
-    };
-});

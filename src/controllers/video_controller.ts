@@ -1,5 +1,6 @@
 /// <reference path="../../declarations/jquery-1.8.d.ts" />
 /// <reference path="../../declarations/angular-1.0.d.ts" />
+/// <reference path="../services/youtube.ts" />
 
 interface IVideoScope extends ng.IScope {
 	videoURL:string;
@@ -7,12 +8,14 @@ interface IVideoScope extends ng.IScope {
 	switchMode:()=>void;
 }
 
-function VideoController($scope:IVideoScope) {
+var VideoController:any = function($scope:IVideoScope, youtube:any) {
 	var VIDEO_MODE:string = 'video';
 	var FORM_MODE :string = 'form';
-	$scope.videoURL = "http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3"
+	$scope.videoURL = "9bZkp7q19f0";
+	youtube.load($scope.videoURL, 'ytplayer');
 	$scope.showVideo = true;
 	$scope.switchMode = () => {
 		$scope.showVideo = !$scope.showVideo;
 	};
 }
+VideoController.$inject = ['$scope', 'youtube'];
