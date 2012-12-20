@@ -3,3 +3,4 @@
 
 # raw js files
 *.js
+!build/*.js
