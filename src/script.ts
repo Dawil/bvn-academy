@@ -2,22 +2,7 @@
 /// <reference path="../declarations/youtube.d.ts" />
 /// <reference path="../declarations/angular-1.0.d.ts" />
 /// <reference path="timer.ts" />
-
-interface IVideoScope extends ng.IScope {
-	videoURL:string;
-	showVideo:bool;
-	switchMode:()=>void;
-}
-
-function VideoController($scope:IVideoScope) {
-	var VIDEO_MODE:string = 'video';
-	var FORM_MODE :string = 'form';
-	$scope.videoURL = "http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3"
-	$scope.showVideo = true;
-	$scope.switchMode = () => {
-		$scope.showVideo = !$scope.showVideo;
-	};
-}
+/// <reference path="controllers/video_controller.ts" />
 
 interface Window {
 	ytplayer: any;
@@ -29,12 +14,11 @@ var POLL_STEP:number = 250; // milliseconds
 var HAS_ENDED:number = 0;
 var IS_PLAYING:number = 1;
 var IS_PAUSED:number = 2;
-var timer:Timer=null;
-
+var timer:Util.Timer=null;
 
 // Helper functions
 function pauseOn(n:number):void {
-	timer = new Timer(POLL_STEP);
+	timer = new Util.Timer(POLL_STEP);
 	timer.onTick(() => {
 		// in milliseconds
 		var timeGap = 1000 * Math.abs( window.ytplayer.getCurrentTime() - n );
@@ -88,5 +72,4 @@ $(window).load(function(){
 		window.ytplayer = document.getElementById( "ytPlayer" );
 		Start();
 	};
-
 });

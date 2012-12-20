@@ -1,77 +1,80 @@
 /// <reference path="../declarations/jquery-1.8.d.ts" />
 
-function getNow():number { return +(new Date); }
+module Util {
 
-class Timer {
-	private INFINITY:number = 0;
+	function getNow():number { return +(new Date); }
 
-	private tickHandlers:{ ():void; }[] = [];
-	private completionHandlers:{ ():void; }[] = [];
+	export class Timer {
+		private INFINITY:number = 0;
 
-	// ID of our timeout
-	private intervalID:number;
+		private tickHandlers:{ ():void; }[] = [];
+		private completionHandlers:{ ():void; }[] = [];
 
-	// how many times we've ticked
-	private currentCount:number=0;
+		// ID of our timeout
+		private intervalID:number;
 
-	// if we've a timeout running
-	active:bool=false;
+		// how many times we've ticked
+		private currentCount:number=0;
 
-	constructor(private delay:number, private repeatCount?:number=0) {
-	}
+		// if we've a timeout running
+		active:bool=false;
 
-	private tick():void {
-		this.currentCount++;
-		if (this.repeatCount === this.INFINITY
-				|| this.currentCount < this.repeatCount) {
-			this.runTickers();
-		} else {
-			this.runCompletions();
+		constructor(private delay:number, private repeatCount?:number=0) {
+		}
+
+		private tick():void {
+			this.currentCount++;
+			if (this.repeatCount === this.INFINITY
+					|| this.currentCount < this.repeatCount) {
+				this.runTickers();
+			} else {
+				this.runCompletions();
+				this.stop();
+			}
+		}
+
+		private runTickers():void {
+			this.tickHandlers.map( (handler) => handler() )
+		}
+
+		private runCompletions():void {
+			this.completionHandlers.map( (handler) => handler() )
+		}
+
+		private createInterval(delay:number):number {
+			return window.setInterval($.proxy(this.tick, this), delay);
+		}
+
+		private destroyInterval(id:number):void {
+			window.clearInterval(id);
+		}
+
+		start():void {
+			if (this.active === false) {
+				this.intervalID = this.createInterval(this.delay);
+				this.active = true;
+			}
+		}
+
+		stop():void {
+			if (this.active) {
+				this.destroyInterval(this.intervalID);
+				delete this.intervalID;
+				this.active = false;
+			}
+		}
+
+		reset():void {
 			this.stop();
+			this.currentCount = 0;
 		}
-	}
 
-	private runTickers():void {
-		this.tickHandlers.map( (handler) => handler() )
-	}
-
-	private runCompletions():void {
-		this.completionHandlers.map( (handler) => handler() )
-	}
-
-	private createInterval(delay:number):number {
-		return window.setInterval($.proxy(this.tick, this), delay);
-	}
-
-	private destroyInterval(id:number):void {
-		window.clearInterval(id);
-	}
-
-	start():void {
-		if (this.active === false) {
-			this.intervalID = this.createInterval(this.delay);
-			this.active = true;
+		onTick(func:() => void):void {
+			this.tickHandlers.push(func);
 		}
-	}
 
-	stop():void {
-		if (this.active) {
-			this.destroyInterval(this.intervalID);
-			delete this.intervalID;
-			this.active = false;
+		onComplete(func:() => void):void {
+			this.completionHandlers.push(func);
 		}
-	}
-
-	reset():void {
-		this.stop();
-		this.currentCount = 0;
-	}
-
-	onTick(func:() => void):void {
-		this.tickHandlers.push(func);
-	}
-
-	onComplete(func:() => void):void {
-		this.completionHandlers.push(func);
 	}
 }

@@ -1,19 +1,10 @@
-function VideoController($scope) {
-    var VIDEO_MODE = 'video';
-    var FORM_MODE = 'form';
-    $scope.videoURL = "http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3";
-    $scope.showVideo = true;
-    $scope.switchMode = function () {
-        $scope.showVideo = !$scope.showVideo;
-    };
-}
 var POLL_STEP = 250;
 var HAS_ENDED = 0;
 var IS_PLAYING = 1;
 var IS_PAUSED = 2;
 var timer = null;
 function pauseOn(n) {
-    timer = new Timer(POLL_STEP);
+    timer = new Util.Timer(POLL_STEP);
     timer.onTick(function () {
         var timeGap = 1000 * Math.abs(window.ytplayer.getCurrentTime() - n);
         if(timeGap < (POLL_STEP / 2)) {
