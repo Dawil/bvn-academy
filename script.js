@@ -1,5 +1,12 @@
 function VideoController($scope) {
-    $scope.title = "Title goes here";
+    var VIDEO_MODE = 'video';
+    var FORM_MODE = 'form';
+    $scope.videoURL = "http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3";
+    $scope.showVideo = true;
+    $scope.switchMode = function () {
+        $scope.showVideo = !$scope.showVideo;
+        console.log($scope.showVideo);
+    };
 }
 var POLL_STEP = 250;
 var HAS_ENDED = 0;
@@ -105,10 +112,6 @@ function toggleVisible() {
     }
 }
 function Start() {
-    $("button").click(function () {
-        alert("Alart");
-        toggleVisible();
-    });
     window.ytplayer.playVideo();
     pauseOn(3);
 }

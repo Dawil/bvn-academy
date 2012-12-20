@@ -3,10 +3,19 @@
 /// <reference path="declarations/angular-1.0.d.ts" />
 
 interface IVideoScope extends ng.IScope {
+	videoURL:string;
+	showVideo:bool;
+	switchMode:()=>void;
 }
 
 function VideoController($scope:IVideoScope) {
-	$scope.title = "Title goes here";
+	var VIDEO_MODE:string = 'video';
+	var FORM_MODE :string = 'form';
+	$scope.videoURL = "http://www.youtube.com/v/9bZkp7q19f0&enablejsapi=1&playerapiid=ytPlayer&version=3"
+	$scope.showVideo = true;
+	$scope.switchMode = () => {
+		$scope.showVideo = !$scope.showVideo;
+	};
 }
 
 interface Window {
@@ -137,10 +146,6 @@ function toggleVisible():void {
 
 // Start after player has loaded
 function Start():void {
-	$("button").click(function(){
-		alert("Alart");
-		toggleVisible();
-	});
 	window.ytplayer.playVideo();
 	pauseOn(3);
 	//timer.start();

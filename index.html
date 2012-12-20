@@ -10,11 +10,11 @@
 		<link href="style.css" media="screen" rel="stylesheet" type="text/css" />
 	</head>
 	<body data-ng-controller="VideoController">
-		<p>{{ title }}</p>
-		<div id="ytwrapper" class="visible">
+		<button data-ng-click="switchMode()">Switch</button>
+		<div id="ytwrapper" class="visible-{{ showVideo }}">
 			<object type="application/x-shockwave-flash" data="http://www.youtube.com/v/dQw4w9WgXcQ&amp;enablejsapi=1&amp;playerapiid=ytPlayer" width="560" height="315" id="ytPlayer" style="visibility: visible;"><param name="allowScriptAccess" value="always"></object>
 		</div>
-		<div id="formwrapper" class="invisible">
+		<div id="formwrapper" class="visible-{{ !showVideo }}">
 				<p>Select the correct option:</p>
 				<input type="radio" name="option" value="correct">Correct<br>
 				<input type="radio" name="option" value="incorrect">Incorrect<br>
