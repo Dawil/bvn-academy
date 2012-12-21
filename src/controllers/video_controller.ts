@@ -27,19 +27,19 @@ module Controllers {
 		$scope.quizzes = [
 				{
 					question: "Select the correct option:",
-					options: ["Correct","Incorrect"],
+					options: [ "Correct", "Incorrect" ],
 					correctOption: "Correct",
 					time: 3
 				},
 				{
 					question: "How many options are there?",
-					options: ["One"],
+					options: [ "One" ],
 					correctOption: "One",
 					time: 7
 				},
 				{
 					question: "What 'style' is this video?",
-					options: ["Gangnam Style", "Oppa Style", "K-POP Style",
+					options: [ "Gangnam Style", "Oppa Style", "K-POP Style",
 						"BVN Donnovan Hill Style"],
 					correctOption: "Gangnam Style",
 					time: 12
@@ -60,7 +60,11 @@ module Controllers {
 			});
 		});
 		$scope.attemptQuiz = () => {
-
+			if ($scope.selectedOption === $scope.selectedQuiz.correctOption) {
+				alert("Yay, correct.");
+			} else {
+				alert("Boo, wrong.");
+			}
 		};
 		$scope.showVideo = true;
 		$scope.switchMode = () => {

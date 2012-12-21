@@ -29,7 +29,7 @@ var Controllers;
                     "BVN Donnovan Hill Style"
                 ],
                 correctOption: "Gangnam Style",
-                time: 5
+                time: 12
             }
         ];
         youtube.load($scope.videoURL, 'ytplayer').done(function () {
@@ -45,6 +45,11 @@ var Controllers;
             });
         });
         $scope.attemptQuiz = function () {
+            if($scope.selectedOption === $scope.selectedQuiz.correctOption) {
+                alert("Yay, correct.");
+            } else {
+                alert("Boo, wrong.");
+            }
         };
         $scope.showVideo = true;
         $scope.switchMode = function () {

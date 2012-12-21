@@ -18,14 +18,16 @@
 			<div id="ytplayer"></div>
 		</div>
 		<div id="formwrapper" class="visible-{{ !showVideo }}">
+			<form name="quiz" action="">
 				<p>{{ selectedQuiz.question }}</p>
 				<span data-ng-repeat="option in selectedQuiz.options">
-					<input type="radio" name="option"
-							value="{{ option }}" data-ng-model="selectedOption">
+					<input type="radio" data-ng-model="$parent.selectedOption"
+				   		value="{{ option }}" name="option">
 						{{ option }}<br>
 				</span>
-				<button id="formbutton" name="button" data-ng-click="attemptQuiz()">OK</button>
-				<button id="replay" name="button2">Play Again</button>
+				<button name="button" data-ng-click="attemptQuiz()">OK</button>
+				<button name="button2">Play Again</button>
+			</form>
 		</div>
 	</body>
 </html>
