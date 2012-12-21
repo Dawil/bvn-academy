@@ -1,11 +1,10 @@
-var POLL_STEP = 250;
-var HAS_ENDED = 0;
-var IS_PLAYING = 1;
-var IS_PAUSED = 2;
-var timer = null;
-academyModule.factory('youtube', [
-    '$q', 
-    function ($q) {
+var Services;
+(function (Services) {
+    var POLL_STEP = 250;
+    var HAS_ENDED = 0;
+    var IS_PLAYING = 1;
+    var IS_PAUSED = 2;
+    academyModule.factory('youtube', function () {
         var timer = new Util.Timer(POLL_STEP);
         var player;
         var syncPlayer = function (state) {
@@ -41,7 +40,7 @@ academyModule.factory('youtube', [
                 swfobject.embedSWF("http://www.youtube.com/v/" + video + "&enablejsapi=1&version=3", id, "560", "315", "8", null, null, params);
                 return deferred;
             },
-            onSecond: function (n, handler) {
+            atSecond: function (n, handler) {
                 timer.onTick(function () {
                     if(player) {
                         var timeGap = 1000 * Math.abs(player.getCurrentTime() - n);
@@ -53,4 +52,5 @@ academyModule.factory('youtube', [
             }
         };
         return youtube;
-    }]);
+    });
+})(Services || (Services = {}));

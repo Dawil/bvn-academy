@@ -1,6 +1,6 @@
 /// <reference path="../../declarations/jquery-1.8.d.ts" />
 /// <reference path="../../declarations/angular-1.0.d.ts" />
-/// <reference path="../services/youtube.ts" />
+/// <reference path="../services/youtube_service.ts" />
 
 interface IVideoScope extends ng.IScope {
 	videoURL:string;
@@ -8,14 +8,14 @@ interface IVideoScope extends ng.IScope {
 	switchMode:()=>void;
 }
 
-var VideoController:any = function($scope:IVideoScope, youtube:any) {
+var VideoController:any = function($scope:IVideoScope, youtube:Services.IYoutubeService) {
 	$scope.videoURL = "9bZkp7q19f0";
 	youtube.load($scope.videoURL, 'ytplayer')
-		.then(()=>{
+		.done(()=>{
 			youtube.getPlayer().playVideo();
 			youtube.getPlayer().mute();
 		});
-	youtube.onSecond(3,()=>{
+	youtube.atSecond(3,()=>{
 		$scope.showVideo = false;
 		youtube.getPlayer().pauseVideo();
 		$scope.$digest();
