@@ -2,6 +2,9 @@ var Controllers;
 (function (Controllers) {
     Controllers.VideoController = function ($scope, youtube) {
         $scope.videoURL = "9bZkp7q19f0";
+        $scope.selectedOption = {
+            str: ''
+        };
         $scope.quizzes = [
             {
                 question: "Select the correct option:",
@@ -45,7 +48,7 @@ var Controllers;
             });
         });
         $scope.attemptQuiz = function () {
-            if($scope.selectedOption === $scope.selectedQuiz.correctOption) {
+            if($scope.selectedOption.str === $scope.selectedQuiz.correctOption) {
                 alert("Yay, correct.");
             } else {
                 alert("Boo, wrong.");

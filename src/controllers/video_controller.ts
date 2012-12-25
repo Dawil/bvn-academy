@@ -10,7 +10,7 @@ module Controllers {
 		switchMode:()=>void;
 		quizzes: Quiz[];
 		selectedQuiz: Quiz;
-		selectedOption: string;
+		selectedOption: { str: string; };
 		attemptQuiz: () => void;
 	}
 
@@ -24,6 +24,7 @@ module Controllers {
 	export var VideoController:any = function($scope:IVideoScope,
 			youtube:Services.IYoutubeService) {
 		$scope.videoURL = "9bZkp7q19f0";
+		$scope.selectedOption = { str: '' };
 		$scope.quizzes = [
 				{
 					question: "Select the correct option:",
@@ -60,7 +61,7 @@ module Controllers {
 			});
 		});
 		$scope.attemptQuiz = () => {
-			if ($scope.selectedOption === $scope.selectedQuiz.correctOption) {
+			if ($scope.selectedOption.str === $scope.selectedQuiz.correctOption) {
 				alert("Yay, correct.");
 			} else {
 				alert("Boo, wrong.");

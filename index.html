@@ -21,7 +21,7 @@
 			<form name="quiz" action="">
 				<p>{{ selectedQuiz.question }}</p>
 				<span data-ng-repeat="option in selectedQuiz.options">
-					<input type="radio" data-ng-model="$parent.selectedOption"
+					<input type="radio" data-ng-model="selectedOption.str"
 				   		value="{{ option }}" name="option">
 						{{ option }}<br>
 				</span>
