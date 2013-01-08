@@ -8,8 +8,9 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 		<script type="text/javascript" src="src/academy.js"></script>
 		<script type="text/javascript" src="src/timer.js"></script>
-		<script type="text/javascript" src="src/controllers/video_controller.js"></script>
 		<script type="text/javascript" src="src/services/youtube_service.js"></script>
+		<script type="text/javascript" src="src/filters/quiz_filters.js"></script>
+		<script type="text/javascript" src="src/controllers/video_controller.js"></script>
 		<link href="style/style.css" media="screen" rel="stylesheet" type="text/css" />
 	</head>
 	<body data-ng-controller="Controllers.VideoController">
@@ -28,6 +29,12 @@
 				<button name="button" data-ng-click="attemptQuiz()">OK</button>
 				<button name="button2">Play Again</button>
 			</form>
+		</div>
+		<div id="progressBar">
+			<div data-ng-repeat="quiz in quizzes"
+				class="marker {{ quiz | toMarkerClass }}">
+				{{ quiz | toIcon }}
+			</div>
 		</div>
 	</body>
 </html>

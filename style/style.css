@@ -9,3 +9,32 @@
 	top: -1000px;
 	right: -1000px;
 }
+
+#ytwrapper, #formwrapper {
+	height: 320;
+	display:block;
+}
+
+#progressBar {
+	width: 560px;
+	height: 20px;
+	background-color: gray;
+	display: -moz-box;
+	display: -webkit-box;
+	display: box;
+}
+
+.marker {
+	text-align: center;
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	box-flex: 1;
+}
+
+.completed-quiz {
+	background-color: green;
+}
+
+.failed-quiz {
+	background-color: red;
+}

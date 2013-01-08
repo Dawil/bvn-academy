@@ -1,6 +1,7 @@
 /// <reference path="../../declarations/jquery-1.8.d.ts" />
 /// <reference path="../../declarations/angular-1.0.d.ts" />
 /// <reference path="../services/youtube_service.ts" />
+/// <reference path="../filters/quiz_filters.ts" />
 
 module Controllers {
 
@@ -19,6 +20,7 @@ module Controllers {
 		options:string[];
 		correctOption:string;
 		time:number;
+		attempt:bool;
 	}
 
 	export var VideoController:any = function($scope:IVideoScope,
@@ -30,20 +32,23 @@ module Controllers {
 					question: "Select the correct option:",
 					options: [ "Correct", "Incorrect" ],
 					correctOption: "Correct",
-					time: 3
+					time: 1,
+					attempt: null
 				},
 				{
 					question: "How many options are there?",
 					options: [ "One" ],
 					correctOption: "One",
-					time: 7
+					time: 7,
+					attempt: null
 				},
 				{
 					question: "What 'style' is this video?",
 					options: [ "Gangnam Style", "Oppa Style", "K-POP Style",
 						"BVN Donnovan Hill Style"],
 					correctOption: "Gangnam Style",
-					time: 12
+					time: 12,
+					attempt: null
 				}
 			];
 		youtube.load($scope.videoURL, 'ytplayer')
@@ -61,11 +66,10 @@ module Controllers {
 			});
 		});
 		$scope.attemptQuiz = () => {
-			if ($scope.selectedOption.str === $scope.selectedQuiz.correctOption) {
-				alert("Yay, correct.");
-			} else {
-				alert("Boo, wrong.");
-			}
+			$scope.selectedQuiz.attempt =
+				$scope.selectedOption.str === $scope.selectedQuiz.correctOption;
+			$scope.switchMode();
+			youtube.getPlayer().playVideo();
 		};
 		$scope.showVideo = true;
 		$scope.switchMode = () => {

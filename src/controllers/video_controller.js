@@ -13,7 +13,8 @@ var Controllers;
                     "Incorrect"
                 ],
                 correctOption: "Correct",
-                time: 3
+                time: 1,
+                attempt: null
             }, 
             {
                 question: "How many options are there?",
@@ -21,7 +22,8 @@ var Controllers;
                     "One"
                 ],
                 correctOption: "One",
-                time: 7
+                time: 7,
+                attempt: null
             }, 
             {
                 question: "What 'style' is this video?",
@@ -32,7 +34,8 @@ var Controllers;
                     "BVN Donnovan Hill Style"
                 ],
                 correctOption: "Gangnam Style",
-                time: 12
+                time: 12,
+                attempt: null
             }
         ];
         youtube.load($scope.videoURL, 'ytplayer').done(function () {
@@ -48,11 +51,9 @@ var Controllers;
             });
         });
         $scope.attemptQuiz = function () {
-            if($scope.selectedOption.str === $scope.selectedQuiz.correctOption) {
-                alert("Yay, correct.");
-            } else {
-                alert("Boo, wrong.");
-            }
+            $scope.selectedQuiz.attempt = $scope.selectedOption.str === $scope.selectedQuiz.correctOption;
+            $scope.switchMode();
+            youtube.getPlayer().playVideo();
         };
         $scope.showVideo = true;
         $scope.switchMode = function () {
