@@ -80,13 +80,17 @@ e.g.
 		<script src="youtube-overlay.js"></script>
 		<script>
 			angular.module("myModule", ["youtubeOverlay"]);
+			var youtubeId, quizSet, completionHandler;
+			function OverlayController($scope, overlay) {
+				overlay.init(youtubeId, quizSet, completionHandler);
+			}
 		</script>
 		...
 	</head>
 	<body>
 		...
 		<div ng-app="myModule">
-			<div youtube-overlay config-data="{}">
+			<div youtube-overlay ng-controller="OverlayController">
 			</div>
 		</div>
 		...
