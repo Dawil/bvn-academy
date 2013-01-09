@@ -8,7 +8,7 @@ create directives
 group into atom: switch and pause in video controller
 move the quizes out of the video controller into some fake loading service thingy
 uss css preprocessor to dry things up
-fucken yeoman!!
+yeoman!!
 document functions in video controller
 it seems the player.atFrame doesn't always avoid gettign stuck on itself
 avoid magic number skip in #replayQuiz
@@ -36,3 +36,32 @@ Directives
 
 * progress bar
 * video thingy
+
+Goals for the Week
+==================
+
+Have an encapsulated widget that can be loaded by a single function from a single script.
+
+    YoutubeOverlay.
+		loadOverlay( elementId:string,	// element to be replaced with overlay
+					 youtubeId:string,	// youtube video to be loaded
+					 questionSet:Quiz[],
+					 completionHandler:(Quiz[]) => void
+				   )
+
+Requirements
+------------
+
+* feature complete code
+* download of production script
+* documentation of `loadOverlay`
+* documentation of quiz format
+
+Roadblocks
+----------
+
+* 100% encapsulation of an angularjs widget
+* loose coupling from the question set (via a service?)
+* 2 stage quizzes (1 - attempt quiz, 2 - presented with success/failure and continue/replay)
+* loose coupling from a completionHandler
+* distinction between gh-pages branch and master branch
