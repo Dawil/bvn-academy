@@ -13,17 +13,4 @@ academyModule
 				return '';
 			}
 		};
-	})
-	.filter('toIcon', function() {
-		return function(input:Controllers.Quiz) {
-			if (input.attempt) {
-				return '✔';
-			} else if (input.attempt == false) {
-				return '✘';
-			} else if (input.attempt == null) {
-				return '•'
-			} else {
-				return '';
-			}
-		};
 	});

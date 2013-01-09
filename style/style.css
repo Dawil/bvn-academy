@@ -35,6 +35,10 @@
 	background-color: green;
 }
 
+.completed-quiz:after {
+	content: "✔";
+}
+
 .completed-quiz:hover {
 	box-shadow: 0 0 5px green;
 }
@@ -43,8 +47,16 @@
 	background-color: red;
 }
 
+.failed-quiz:after {
+	content: "✘";
+}
+
 .failed-quiz:hover {
 	box-shadow: 0 0 5px red;
+}
+
+.unattempted-quiz:after {
+	content: "•";
 }
 
 .unattempted-quiz:hover {
