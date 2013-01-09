@@ -56,6 +56,7 @@ Requirements
 * download of production script
 * documentation of `loadOverlay`
 * documentation of quiz format
+* alternative production script for use in other angularjs apps?
 
 Roadblocks
 ----------
@@ -65,3 +66,36 @@ Roadblocks
 * 2 stage quizzes (1 - attempt quiz, 2 - presented with success/failure and continue/replay)
 * loose coupling from a completionHandler
 * distinction between gh-pages branch and master branch
+
+Goals for the Week -- Revision
+==============================
+
+Quick research seems to indicate that it is not simple to perfectly encapsulate an anguarjs app. This indicates that the correct way to share the YoutubeOverlay widget is as an angularjs directive inside an angularjs module.
+
+e.g.
+
+    <head>
+        ...
+        <script src="angular.js"></script>
+		<script src="youtube-overlay.js"></script>
+		<script>
+			angular.module("myModule", ["youtubeOverlay"]);
+		</script>
+		...
+	</head>
+	<body>
+		...
+		<div ng-app="myModule">
+			<div youtube-overlay config-data="{}">
+			</div>
+		</div>
+		...
+	</body>
+
+where `config-data` has the format:
+
+	{
+		youtubeId:string,
+		quizSet:Quiz[],
+		completionHandler:(completedQuizSet:AttemptedQuiz[]) => void
+	}
