@@ -35,6 +35,19 @@
 	background-color: green;
 }
 
+.completed-quiz:hover {
+	box-shadow: 0 0 5px green;
+}
+
 .failed-quiz {
 	background-color: red;
 }
+
+.failed-quiz:hover {
+	box-shadow: 0 0 5px red;
+}
+
+.unattempted-quiz:hover {
+	box-shadow: 0 0 5px gray;
+}
+
