@@ -78,12 +78,18 @@ e.g.
         ...
         <script src="angular.js"></script>
 		<script src="youtube-overlay.js"></script>
+		<link href="overlay-style.css"/>
 		<script>
-			angular.module("myModule", ["youtubeOverlay"]);
 			var youtubeId, quizSet, completionHandler;
-			function OverlayController($scope, overlay) {
-				overlay.init(youtubeId, quizSet, completionHandler);
-			}
+
+			angular.module("myModule", ["youtubeOverlay"]) // modules
+				.controller("OverlayController", // controller
+					["$scope", "youtubeOverlay", // minify protection
+					function($scope, overlay) {  // function definition
+						// the good stuff
+						overlay.init(youtubeId, quizSet, completionHandler);
+					}
+				);
 		</script>
 		...
 	</head>
@@ -96,10 +102,8 @@ e.g.
 		...
 	</body>
 
-where `config-data` has the format:
+where:
 
-	{
-		youtubeId:string,
-		quizSet:Quiz[],
-		completionHandler:(completedQuizSet:AttemptedQuiz[]) => void
-	}
+	youtubeId:string,
+	quizSet:Quiz[],
+	completionHandler:(completedQuizSet:AttemptedQuiz[]) => void
