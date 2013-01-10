@@ -12,10 +12,11 @@ module Directives {
 				'class="marker {{ quiz | toMarkerClass }}">' +
 			'</div>' +
 		'</div>' +
-		'<div id="ytwrapper" class="visible-{{ showVideo }}">' +
+		'<div id="ytwrapper" class="visible-{{ showVideo() }}">' +
 			'<div id="ytplayer"></div>' +
 		'</div>' +
-		'<div id="formwrapper" class="visible-{{ !showVideo }}">' +
+		'<div id="formwrapper" ng-controller="Controllers.QuizController"' +
+				'class="visible-{{ !showVideo() }}">' +
 			'<div ng-switch on="quizMode">' +
 				'<form ng-switch-when="attempting" name="quiz" action="">' +
 					'<p>{{ selectedQuiz.question }}</p>' +

@@ -15,6 +15,7 @@ module Services {
 		getPlayer: () => any;
 		load: (video:string, id:string) => JQueryDeferred;
 		atSecond: (n:number, handler:()=>void) => void;
+		hide: bool;
 	}
 
 	overlayModule.factory('youtube', () => {
@@ -57,7 +58,8 @@ module Services {
 						}
 					}
 				});
-			}
+			},
+			hide: false
 		};
 		return youtube;
 	});
