@@ -1,7 +1,7 @@
 /// <reference path="../timer.ts" />
 /// <reference path="../../declarations/angular-1.0.d.ts" />
 /// <reference path="../../declarations/jquery-1.8.d.ts" />
-/// <reference path="../academy.ts" />
+/// <reference path="../overlay.ts" />
 
 module Services {
 
@@ -17,7 +17,7 @@ module Services {
 		atSecond: (n:number, handler:()=>void) => void;
 	}
 
-	academyModule.factory('youtube', () => {
+	overlayModule.factory('youtube', () => {
 		var timer:Util.Timer = new Util.Timer(POLL_STEP);
 		var player;
 		var syncPlayer:(state:number)=>void = (state:number):void => {

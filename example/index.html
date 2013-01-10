@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html data-ng-app="academy">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>BVN Academy Demo</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+		<script type="text/javascript" src="../lib/src/overlay.js"></script>
+		<script type="text/javascript" src="../lib/src/timer.js"></script>
+		<script type="text/javascript" src="../lib/src/controllers/video_controller.js"></script>
+		<script type="text/javascript" src="../lib/src/directives/youtube_overlay.js"></script>
+		<script type="text/javascript" src="../lib/src/filters/quiz_filters.js"></script>
+		<script type="text/javascript" src="../lib/src/services/youtube_service.js"></script>
+		<script type="text/javascript" src="config.js"></script>
+		<script type="text/javascript">
+            angular
+                .module("academy", ["youtubeOverlay"]); // modules
+
+			function MainController($scope) { // minify protection
+				$scope.quizzes = quizSet;
+				$scope.youtubeId = youtubeId;
+				$scope.completionHandler = completionHandler;
+			}
+		</script>
+		<link href="style/style.css" media="screen" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div youtube-overlay ng-controller="MainController">
+		</div>
+	</body>
+</html>

@@ -10,7 +10,7 @@ move the quizes out of the video controller into some fake loading service thing
 uss css preprocessor to dry things up
 yeoman!!
 document functions in video controller
-it seems the player.atFrame doesn't always avoid gettign stuck on itself
+it seems the player.atFrame doesn''t always avoid gettign stuck on itself
 avoid magic number skip in #replayQuiz
 
 Progress Bar
@@ -18,18 +18,18 @@ Progress Bar
 
 As quizes are attempted the progress object is updated with the attempt
 
-<progressbar ng-repeat="quiz in quizzes">
-	<marker attempt="{{ quiz.attempt }}">
-	</marker>
-</progressbar>
+	<progressbar ng-repeat="quiz in quizzes">
+		<marker attempt="{{ quiz.attempt }}">
+		</marker>
+	</progressbar>
 
-prgressbar {
-	// has a thin bar through the middle
-}
+	prgressbar {
+		// has a thin bar through the middle
+	}
 
-marker {
-	// is a circle with a utf tick, cross or dot depending on the quiz.attempt
-}
+	marker {
+		// is a circle with a utf tick, cross or dot depending on the quiz.attempt
+	}
 
 Directives
 ----------
@@ -82,13 +82,14 @@ e.g.
 		<script>
 			var youtubeId, quizSet, completionHandler;
 
-			angular.module("myModule", ["youtubeOverlay"]) // modules
+			angular
+				.module("myModule", ["youtubeOverlay"]) // modules
 				.controller("OverlayController", // controller
 					["$scope", "youtubeOverlay", // minify protection
 					function($scope, overlay) {  // function definition
 						// the good stuff
 						overlay.init(youtubeId, quizSet, completionHandler);
-					}
+					}]
 				);
 		</script>
 		...
@@ -107,3 +108,21 @@ where:
 	youtubeId:string,
 	quizSet:Quiz[],
 	completionHandler:(completedQuizSet:AttemptedQuiz[]) => void
+
+Requirements
+------------
+
+* feature complete code
+* download of production script
+* documentation of how to import (as above)
+* documentation of quiz format
+* typescript definition file
+
+Roadblocks
+----------
+
+* encapsulation as an angularjs widget
+* loose coupling from the question set in the code (via a service?)
+* 2 stage quizzes (1 - attempt quiz, 2 - presented with success/failure and continue/replay)
+* loose coupling from a completionHandler
+* distinction between gh-pages branch and master branch

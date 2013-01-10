@@ -1,8 +1,10 @@
 /// <reference path="../controllers/video_controller.ts" />
+/// <reference path="../models/quiz.ts" />
+/// <reference path="../overlay.ts" />
 
-academyModule
+overlayModule
 	.filter('toMarkerClass', function() {
-		return function(input:Controllers.Quiz) {
+		return function(input:Models.Quiz) {
 			if (input.attempt) {
 				return 'completed-quiz';
 			} else if (input.attempt == false) {
