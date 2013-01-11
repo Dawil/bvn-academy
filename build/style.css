@@ -1,0 +1,65 @@
+.visibile-true {
+	position: relative;
+	top: 0px;
+	right: 0px;
+}
+
+.visible-false {
+	position: absolute;
+	top: -1000px;
+	right: -1000px;
+}
+
+#ytwrapper, #formwrapper {
+	height: 320;
+	display:block;
+}
+
+#progressBar {
+	width: 560px;
+	height: 20px;
+	background-color: gray;
+	display: -moz-box;
+	display: -webkit-box;
+	display: box;
+}
+
+.marker {
+	text-align: center;
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	box-flex: 1;
+}
+
+.completed-quiz {
+	background-color: green;
+}
+
+.completed-quiz:after {
+	content: "✔";
+}
+
+.completed-quiz:hover {
+	box-shadow: 0 0 5px green;
+}
+
+.failed-quiz {
+	background-color: red;
+}
+
+.failed-quiz:after {
+	content: "✘";
+}
+
+.failed-quiz:hover {
+	box-shadow: 0 0 5px red;
+}
+
+.unattempted-quiz:after {
+	content: "•";
+}
+
+.unattempted-quiz:hover {
+	box-shadow: 0 0 5px gray;
+}
+
