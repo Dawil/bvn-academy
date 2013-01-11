@@ -172,6 +172,10 @@ There is an example of the quiz format in `config.js`:
 			],
 		completionHandler = function(attemptedQuizSet){console.log("DONE!")};
 
+Typescript Declarations
+=======================
+
+Because this project was written in Typescript, there is also a typescript declaration file in the build directory, if desired.
 Todo
 ====
 
