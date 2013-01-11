@@ -182,3 +182,5 @@ Todo
 * `completionHandler` doesn't work
 * will sometimes pause the video twice for the same question
 * use a proper build system (e.g. yeoman)
+* `play again` isn't implemented
+* put the css for hiding the player inside the js script
